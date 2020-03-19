@@ -1,0 +1,23 @@
+body {
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+}
+
+#board td {
+	background-color: indigo;
+	border: 1px solid black;
+	width: 200px;
+	height: 145px;
+}
+
+.zoom-in {
+	animation-duration: 2s;
+	animation: zoomin;
+}
+
+@keyframes zoomin {
+	from {
+	}
+}
