@@ -4,14 +4,13 @@ class Jeopardy {
 		this.players = [ p1, p2, p3 ];
 		this.height = height;
 		this.width = width;
-		this.arr = [];
 		this.ids = [];
 		this.clues = [];
 		this.board = [];
 		this.makeBoard();
 		this.makeHTMLBoard();
+		this.initQuestions();
 		this.gameover = false;
-		this.getCategory();
 		this.lockboard = false;
 	}
 
@@ -61,27 +60,34 @@ class Jeopardy {
 		board.addEventListener('click', this.handleEachClick);
 	}
 
-	//Obtains categories and pushes the ids of those categories to arr property of new object
-	async getCategory() {
-		//getting 100 categories from Jeopardy API
-		const result = await axios.get('http://jservice.io/api/categories?count=100');
+	async initQuestions() {
+		this.arr = await this.getCategory()
+		// and continue with this.ids = await getCategoriesIds
+		// etc
+	}
 
+	//Obtains categories and pushes the ids of those categories to arr property of new object
+	async getCategory() { // isn't it more like setCategory? check out object attibutes setters https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set
+		//getting 100 categories from Jeopardy API
+		const result = await axios.get('http://jservice.io/api/categories?count=100'); // is it neccessary to get 100 when number of categories is already defined?
+		const categoryIds = []
 		for (let x = 0; x < this.width; x++) {
 			const random = Math.floor(Math.random() * result.data.length);
+			categoryIds.push(result.data[random].id);
+
 			const topmostCell = document.getElementById(`${x}`);
-			this.arr.push(result.data[random].id);
 			topmostCell.innerText = result.data[random].title.toUpperCase();
-			topmostCell.style.textAlign = 'center';
+			topmostCell.style.textAlign = 'center'; // would consider using class here instead of inline styling in js
 			topmostCell.style.fontFamily = 'Impact';
 			topmostCell.style.fontSize = '40px';
 			topmostCell.style.color = 'white';
 		}
-		console.log(this.arr);
-		return this.getCategoryId(this.arr);
+		// i would rather return the whole object not just ids and then execute the six lines above in initQuestions() and loop over arr. The reason is that this method should do just one part of the logic - get categories and thats it.
+		return categoryIds
 	}
 	//gets ids of categories and invokes getClues instance method to obtain clues
 	async getCategoryId(arr) {
-		const res1 = await axios.get(`http://jservice.io/api/category?id=${arr[0]}`);
+		const res1 = await axios.get(`http://jservice.io/api/category?id=${arr[0]}`); // number of calls can vary right? You should handle the number of api calls dynamically. Take a look at Promise.all() https://alligator.io/js/async-functions/
 		const res2 = await axios.get(`http://jservice.io/api/category?id=${arr[1]}`);
 		const res3 = await axios.get(`http://jservice.io/api/category?id=${arr[2]}`);
 		const res4 = await axios.get(`http://jservice.io/api/category?id=${arr[3]}`);
