@@ -122,7 +122,9 @@ class Jeopardy {
 
 					//Setting the innerText of the new div to the relevant question
 					newDiv.innerText = this.clues[x][y].question;
+					document.body.append(newDiv);
 					//Check css for zoom-in animation. The new div does not animate to fill the whole screen
+
 					newDiv.classList.add('zoom-in');
 
 					console.log(newDiv);
