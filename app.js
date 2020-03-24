@@ -116,7 +116,7 @@ class Jeopardy {
 				if (targetID.includes(`${y}-${x}`) && targetID) {
 					//Creating a new div for the question pertaining to the clicked td
 					let newDiv = document.createElement('DIV');
-					let clickedTD = document.getElementById(`${y}-${x}`);
+					newDiv.setAttribute('id', `${y}-${x}`);
 
 					//Setting the innerText of the new div to the relevant question
 					newDiv.innerText = this.clues[x][y].question;
@@ -131,6 +131,15 @@ class Jeopardy {
 						});
 					});
 				}
+			}
+		}
+		this.removeDivs();
+	}
+
+	removeDivs() {
+		for (let x = 0; x < this.width; x++) {
+			for (let y = 0; y < this.height - 1; y++) {
+				document.getElementById(`${y}-${x}`).remove();
 			}
 		}
 	}
