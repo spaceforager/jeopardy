@@ -61,8 +61,6 @@ class Jeopardy {
 		this.arr = await this.getCategory();
 		const ids = await this.getCategoryId(this.arr);
 		this.getClues(ids);
-		// and continue with this.ids = await getCategoriesIds
-		// etc
 	}
 
 	//Obtains categories and pushes the ids of those categories to arr property of new object
@@ -77,7 +75,7 @@ class Jeopardy {
 			this.topMostRowStyling(x, random, result);
 		}
 		// i would rather return the whole object not just ids and then execute the six lines above in initQuestions() and loop over arr. The reason is that this method should do just one part of the logic - get categories and thats it.
-		console.log(categoryIds);
+
 		return categoryIds;
 	}
 
@@ -96,7 +94,7 @@ class Jeopardy {
 		const res6 = await axios.get(`http://jservice.io/api/category?id=${arr[5]}`);
 
 		this.ids.push(res1.data, res2.data, res3.data, res4.data, res5.data, res6.data);
-		console.log(this.ids);
+
 		return this.ids;
 	}
 	//gets clues based on the ids of the categories
@@ -104,7 +102,7 @@ class Jeopardy {
 		for (let element of arr) {
 			this.clues.push(element.clues);
 		}
-		console.log(this.clues);
+
 		return this.clues;
 	}
 
@@ -126,10 +124,12 @@ class Jeopardy {
 					//Check css for zoom-in animation. The new div does not animate to fill the whole screen
 
 					newDiv.classList.add('zoom-in');
-
-					console.log(newDiv);
-					console.log(this.clues[x][y].question);
-					console.log(this.clues[x][y].answer);
+					newDiv.addEventListener('click', () => {
+						newDiv.innerText = this.clues[x][y].answer;
+						newDiv.addEventListener('click', () => {
+							newDiv.classList.remove('zoom-in');
+						});
+					});
 				}
 			}
 		}

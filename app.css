@@ -29,12 +29,16 @@ body {
 }
 
 .zoom-in {
-	background-color: #000;
-
+	background-color: indigo;
+	font-size: 4.5rem;
+	text-align: center;
+	margin: auto auto;
 	color: white;
+	font-family: Impact, Haettenschweiler, Arial Narrow Bold, sans-serif;
 	position: absolute;
 	animation-name: zoomin;
 	animation-duration: 2s;
+	animation-fill-mode: forwards;
 }
 
 @keyframes zoomin {
@@ -43,7 +47,7 @@ body {
 		height: 0;
 	}
 	to {
-		width: 100vw;
-		height: 100vh;
+		width: 100%;
+		height: 100%;
 	}
 }
