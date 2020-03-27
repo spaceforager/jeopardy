@@ -7,6 +7,10 @@ body {
 	padding: 0;
 }
 
+.container {
+	position: relative;
+}
+
 #board td {
 	background-color: indigo;
 	border: 1px solid black;
@@ -40,7 +44,7 @@ body {
 	position: absolute;
 	animation-name: zoomin;
 	animation-duration: 4s;
-	animation-timing-function: ease-in-out;
+	animation-timing-function: linear;
 	animation-fill-mode: forwards;
 }
 

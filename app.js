@@ -109,37 +109,27 @@ class Jeopardy {
 	// click handler for clicked Tds displaying $ amounts
 	handleClick(e) {
 		let targetID = e.target.id;
+		let event = e;
 
 		for (let x = 0; x < this.width; x++) {
 			for (let y = 0; y < this.height - 1; y++) {
 				//Checking to see if the clicked td matches the id of a td within board
 				if (targetID.includes(`${y}-${x}`) && targetID) {
 					//Creating a new div for the question pertaining to the clicked td
-					let newDiv = document.createElement('DIV');
-					newDiv.setAttribute('class', `${y}-${x}`);
+					let newDiv = document.querySelector('.question');
 
 					//Setting the innerText of the new div to the relevant question
 					newDiv.innerText = this.clues[x][y].question;
-					document.body.prepend(newDiv);
 
-					newDiv.classList.add('zoom-in');
+					newDiv.classList.toggle('zoom-in');
 					newDiv.addEventListener('click', () => {
 						newDiv.innerText = this.clues[x][y].answer;
-						newDiv.addEventListener('click', () => {
+						setTimeout(() => {
 							newDiv.classList.remove('zoom-in');
-							this.removeDivs();
-						});
+							event.target.innerHTML = '';
+						}, 4000);
 					});
 				}
-			}
-		}
-	}
-
-	removeDivs() {
-		for (let x = 0; x < this.width; x++) {
-			for (let y = 0; y < this.height - 1; y++) {
-				let div = document.getElementsByClassName(`${y}-${x}`);
-				document.body.removeChild(div);
 			}
 		}
 	}
