@@ -29,15 +29,18 @@ body {
 }
 
 .zoom-in {
+	display: flex;
 	background-color: indigo;
 	font-size: 4.5rem;
 	text-align: center;
-	margin: auto auto;
+	align-items: center;
+	align-content: center;
 	color: white;
 	font-family: Impact, Haettenschweiler, Arial Narrow Bold, sans-serif;
 	position: absolute;
 	animation-name: zoomin;
-	animation-duration: 2s;
+	animation-duration: 4s;
+	animation-timing-function: ease-in-out;
 	animation-fill-mode: forwards;
 }
 
