@@ -51,21 +51,20 @@ class Jeopardy {
 
 			board.append(row);
 		}
-
-		// store a reference to the handleClick bound function
-		this.handleEachClick = this.handleClick.bind(this);
-		board.addEventListener('click', this.handleEachClick);
 	}
 
 	async initQuestions() {
 		this.arr = await this.getCategory();
 		const ids = await this.getCategoryId(this.arr);
 		this.getClues(ids);
+
+		// store a reference to the handleClick bound function
+		this.handleEachClick = this.handleClick.bind(this);
+		board.addEventListener('click', this.handleEachClick);
 	}
 
 	//Obtains categories and pushes the ids of those categories to arr property of new object
 	async getCategory() {
-		// isn't it more like setCategory? check out object attibutes setters https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set
 		//getting 100 categories from Jeopardy API
 		const result = await axios.get('http://jservice.io/api/categories?count=100'); // is it neccessary to get 100 when number of categories is already defined?
 		const categoryIds = [];
@@ -74,7 +73,6 @@ class Jeopardy {
 			categoryIds.push(result.data[random].id);
 			this.topMostRowStyling(x, random, result);
 		}
-		// i would rather return the whole object not just ids and then execute the six lines above in initQuestions() and loop over arr. The reason is that this method should do just one part of the logic - get categories and thats it.
 
 		return categoryIds;
 	}
